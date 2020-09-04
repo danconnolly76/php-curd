@@ -2,7 +2,7 @@
 include_once 'connection.php';
 class Clients {
     
-    public function insertClients($fname, $lname, $email, $message) {
+    public static function insertClients($fname, $lname, $email, $message) {
         $conn = Connection::getConnection();
         $query = 'INSERT INTO clients (fname, lname, email, message) VALUES (?,?,?,?)';
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
@@ -16,7 +16,7 @@ class Clients {
         return $stmt;
     }
     
-    public function readClients() {
+    public static function readClients() {
         $conn = Connection::getConnection();
         $query = "SELECT * FROM clients";
         $result = $conn->query($query);
@@ -25,7 +25,7 @@ class Clients {
         return $clients;
     }
 
-    public function getClientsId($clientId) {
+    public static function getClientsId($clientId) {
         $conn = Connection::getConnection();
         $stmt = $conn->prepare("SELECT * FROM clients WHERE clients.id = ?");
         $stmt->bindValue(1, $clientId);
@@ -35,7 +35,7 @@ class Clients {
         return $client;
     }
 
-    public function updateClients($id, $fname, $lname, $email, $message) {
+    public static function updateClients($id, $fname, $lname, $email, $message) {
         $conn = Connection::getConnection();
         $query="UPDATE clients SET fname=:fname, lname=:lname, email=:email, message=:message WHERE id=:id";
         $stmt=$conn->prepare($query);
@@ -52,7 +52,7 @@ class Clients {
         return false;
     }
 
-    public function deleteClients($clientGetId) {
+    public static function deleteClients($clientGetId) {
         $conn = Connection::getConnection();
         $stmt = $conn->prepare("DELETE FROM clients WHERE clients.id = ?");
         $stmt->bindValue(1, $clientGetId);
