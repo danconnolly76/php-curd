@@ -3,7 +3,7 @@ include_once 'connection.php';
 
 class Users {
     
-    public function insertUsers($username, $fname, $lname, $email, $password) {
+    public static function insertUsers($username, $fname, $lname, $email, $password) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $conn = Connection::getConnection();
         $query = 'INSERT INTO users (username, fname, lname, email, password) VALUES (?,?,?,?,?)';
@@ -18,7 +18,7 @@ class Users {
     }
 
 
-    public function loginUsers($username, $password) {
+    public static function loginUsers($username, $password) {
         $conn = Connection::getConnection();
         $stmt = $conn->prepare("SELECT * FROM  users WHERE users.username = ?");
         $stmt->bindValue(1, $username);
@@ -33,7 +33,7 @@ class Users {
          }
     }
 
-    public function checkUsername($username) {
+    public static function checkUsername($username) {
         $conn = Connection::getConnection();
         $stmt = $conn->prepare("SELECT username FROM users WHERE users.username = ?");
         $stmt->bindValue(1, $username);
